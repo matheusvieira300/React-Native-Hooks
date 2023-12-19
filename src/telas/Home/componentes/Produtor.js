@@ -1,12 +1,27 @@
-import React, { useState } from "react";
+import React, { useReducer, useMemo } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Estrelas from "../../../componentes/Estrelas";
 
+
+const distanciaEmMetros = (distancia) => {
+    console.log('distanciaEmMetros')
+    return `${distancia}m`;
+}
+
 export default function Produtor({ nome, imagem, distancia, estrelas}) {
-    const [ selecionado, setSelecionado ] = useState(false); //se o cartão está sendo selecionado ou não
+    const [selecionado, inverterSelecionado] = useReducer(
+        (selecionado) => !selecionado, // selecionado é o estado atual, e depois ele é invertido/negado
+        false
+    );
+
+    //useMemo salva na memória um valor para não ser recarregado várias vezes sem necessidade
+    const distanciaTexto = useMemo(() => distanciaEmMetros(distancia),
+     [distancia],//passando como pârametro a distância
+    );
+        
     return <TouchableOpacity
      style={estilos.cartao}
-     onPress={() => setSelecionado(!selecionado)}//para inverter essa seleção ao clicar de true para false e vice versa
+     onPress={inverterSelecionado}//para inverter essa seleção ao clicar de true para false e vice versa
      >
         {/* acessibilityLabel serve para pessoas com deficiência visual possam ler o texto*/}
         <Image source={imagem} style={estilos.imagem} accessibilityLabel={nome} />
@@ -19,7 +34,7 @@ export default function Produtor({ nome, imagem, distancia, estrelas}) {
                 grande={selecionado}
             />
             </View>
-            <Text style={estilos.distancia}>{ distancia }</Text>
+            <Text style={estilos.distancia}>{ distanciaTexto }</Text>
         </View>
     </TouchableOpacity>
 }

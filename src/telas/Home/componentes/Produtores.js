@@ -2,20 +2,11 @@ import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text } from "react-native";
 
 import Produtor from "./Produtor";
-import { carregaProdutores } from "../../../servicos/carregaDados";
+import useProdutores from "../../../hooks/useProdutores";
 
 
 export default function Produtores({ topo: Topo}) { //isso tudo é um Hooks
-    const [titulo, setTitulo] = useState('');//hook de useState, ao lado esquerdo do array estado e direito o método que altera esse estado
-    const [lista, setLista] = useState([]);
-
-    useEffect(() => { //ele vai executar uma vez só quando o componente for carregado
-        const retorno = carregaProdutores();
-        setTitulo(retorno.titulo);
-        // console.log(retorno);//para obter no console os dados dos Produtores
-        setLista(retorno.lista);
-    }, []);//O UseEffect é uma função que vem do React que, se o segundo parâmetro for uma lista vazia ([]),
-    // faz uma ação (apenas uma vez) quando um componente é carregado.
+    const [titulo, lista] = useProdutores();//use produtores que retorna o titulo e a lista
 
     //função
     const TopoLista = () =>{
