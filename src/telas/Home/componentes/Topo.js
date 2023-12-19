@@ -18,7 +18,7 @@ import logo from '../../../assets/logo.png';
         // console.log(retorno);
     }
 
-    componentDidMount () {//DidMount para carregar uma única vez, otimizar.
+    componentDidMount () {//executado quando o componente termina de renderizar
         // console.log("Componente Montado");// quando o componente for mando vai ser exibido no console a mensage
         this.atualizaTopo();//estou chamando desta classe com o this. a função da classe 
     }
@@ -46,11 +46,13 @@ const estilos = StyleSheet.create({
         marginTop: 24, //espaço do topo
         fontSize: 26, //aumentar o tamanho da fonte
         lineHeight: 42, //tamanho da linha
-        fontWeight: 'bold' //para setar a fonte como negrito
+        fontWeight: 'bold', //para setar a fonte como negrito
+        color: '#464646'
     },
     legenda: {
         fontSize: 16,
         lineHeight: 26,
+        color: '#A3A3A3',
     }
 });
 
