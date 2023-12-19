@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
-import estrela from '../assets/estrela.png';
-import estrelaCinza from '../assets/estrelaCinza.png';
+import Estrela from "./Estrela";
 
 export default function Estrelas({
     quantidade: quantidadeAntiga, //recebendo a quantidade e será tratada como quantidade antiga
@@ -10,26 +9,17 @@ export default function Estrelas({
     grande = false, //originalmente ela não será grande mais virá a ser
 }) {
     const [quantidade, setQuantidade] = useState(quantidadeAntiga);//para tornar alterável a quantidade
-    const estilos = estilosFuncao(grande);
-
-    const getImage = (index) => {
-        if(index < quantidade) { //se o i for menor que a quantidade a estrela será retornada 
-        return estrela;
-    }
-    return estrelaCinza;
-}
 
     const RenderEstrelas = () => {//função
         const listaEstrelas = [];
         for (let i = 0; i< 5; i++){
             listaEstrelas.push( //push adicionar no fim da lista algum item
-            <TouchableOpacity
+                <Estrela 
                 key={i}
-                onPress={() => setQuantidade(i + 1)} //0 + 1
-                disabled={!editavel} //negação
-                >
-                <Image source={getImage(i)} style={estilos.estrela} />
-                </TouchableOpacity>
+                onPress={() => setQuantidade(i + 1)}
+                desabilitada={!editavel}
+                preenchida={i < quantidade}
+                grande={grande} />
             );
         }
         return listaEstrelas;
@@ -40,13 +30,8 @@ export default function Estrelas({
 }
 
 // = () => significa que é uma função.
-const estilosFuncao = (grande) => StyleSheet.create({
+const estilos = StyleSheet.create({
     estrelas: {
         flexDirection: 'row',
     },
-    estrela: {
-        width: grande ? 36 : 12,//se for grande true 36 senão 12
-        height: grande ? 36: 12,
-        marginRight: 2,
-    }
 })
